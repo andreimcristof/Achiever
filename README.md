@@ -4,57 +4,19 @@ Achievements manager app
 
 ## Video series
 
-## Defining Requirements
+This project serves as the codebase for the following YouTube video series of tutorials:
 
-- I can create, read, update, delete ACH
-- An ACH can be standalone, or Epic ACH
-- An ACH can be:
-  - Completion ACH (X out of Y)
-  - Challenge ACH (Timed)
-  - Exploration ACH (get acquainted with field X)
-- I can see my ACH Board at any time, shows progress
-  per each achievement.
-- I can interact and tick an ACH to complete it
-- An ACH could have a reward (Title?)
+[Coding a Dart/Flutter App From Scratch - Andrei Cristof Algorithms](https://www.youtube.com/watch?v=OFb__ONg1yA&list=PLbplhpZxHi4u6--mF7bhK86EaLXutqJjq)
 
-## Use Cases
+## Frequently Asked Questions
 
-- Create Read Update Delete Achievements
-- See Board of Achievements with Summary
-- Interact with Achievements to complete them
+### Do you accept Pull Requests?
 
-## Tech Stack
+It depends:
 
-### Decisional Factors for choosing Tech Stack
+- Since this is mostly a project intended for a YouTube series, I should be the one that decides the features for the project, so feature pull requests will probably not be accepted at this time (maybe later).
+- However, if you find a bug and would like to contribute by fixing it, it is highly appreciated.
 
-- how do we use the app? desktop/mobile/web?
-- multiple devices must be supported from start?
-- familiar already with any languages/frameworks?
-- speed of development important?
-  - finish it quick, or
-  - take time to learn smth new?
-- cloud services requirements?
-  - should it store anything in cloud?
+### Can I fork and make my own spin-off from your project?
 
-### Answers
-
-- the app needs to be immediately accessible on user desktop while working on other tasks. Perhaps a desktop app living in systray
-- learning new things is prioritized over speed of development
-- desktop app that can be easily ported to web / mobile
-- experience background is in C#, TS, Java, so any of those is fine. But Dart has several advantages over these:
-
-#### Picking Dart/Flutter? Advantages
-
-- cross-platform desktop/mobile/web
-  - one codebase to rule all platforms
-  - very easy to just reuse codebase for a diff platform, with one line build command.
-- fun language to learn
-- Flutter supports a local DB w/ SQLite
-- excellent docus
-- design consistency (Material UI)
-
-### Decision
-
-- Desktop app
-- Flutter framework with Dart
-- local database only for simplicity of first version
+It has an MIT license, so feel free to act according to the license.
