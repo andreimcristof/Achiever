@@ -11,6 +11,19 @@ class Achievement<T extends AchievementCriteria> {
   void complete() {
     acquiredOn = DateTime.now();
   }
+
+  factory Achievement.fromJson(Map<String, dynamic> json) {
+    return Achievement(
+        json['name'], json['description'], json['achievementCriteria']);
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'name': name,
+      'description': description,
+      'achievementCriteria': achievementCriteria,
+    };
+  }
 }
 
 /// each Achievement subtype has different completion criteria.
@@ -34,11 +47,11 @@ class CompletionAchievementCriteria extends AchievementCriteria {
 
 // usage:
 
-var levelReachedAchievement = Achievement<LevelReachAchievementCriteria>(
-    'name', 'description', LevelReachAchievementCriteria(10));
+// var levelReachedAchievement = Achievement<LevelReachAchievementCriteria>(
+//     'name', 'description', LevelReachAchievementCriteria(10));
 
-var timedAchievement = Achievement<TimedAchievementCriteria>('name',
-    'description', TimedAchievementCriteria(const Duration(seconds: 60)));
+// var timedAchievement = Achievement<TimedAchievementCriteria>('name',
+//     'description', TimedAchievementCriteria(const Duration(seconds: 60)));
 
-var completionAchievement = Achievement<CompletionAchievementCriteria>(
-    'name', 'description', CompletionAchievementCriteria(10));
+// var completionAchievement = Achievement<CompletionAchievementCriteria>(
+//     'name', 'description', CompletionAchievementCriteria(10));
