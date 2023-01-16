@@ -1,21 +1,21 @@
-import 'package:achiever_app/character/domain/models/skill_model.dart';
 import 'package:achiever_app/quest/domain/models/quest_difficulty_model.dart';
 
 class Quest {
   final String name;
-  final String description;
-  final Duration? timebox;
   final Difficulty difficulty;
+  final String? description;
+  final Duration? timebox;
+  final List<String> tags;
   DateTime? completedOn;
-  final Skill skill;
+  DateTime createdAt;
 
   Quest(
     this.name,
-    this.description,
-    this.skill,
     this.difficulty,
-    this.timebox,
-  );
+    this.tags,
+  )   : description = 'null',
+        timebox = null,
+        createdAt = DateTime.now();
 
   int get questPoints {
     return difficultyToPointsMap[difficulty] ?? 0;
@@ -23,5 +23,9 @@ class Quest {
 
   void complete() {
     completedOn = DateTime.now();
+  }
+
+  bool isCompleted() {
+    return completedOn != null;
   }
 }

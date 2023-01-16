@@ -1,9 +1,18 @@
+import 'package:achiever_app/achievement/domain/services/achievement_provider.dart';
 import 'package:achiever_app/character/presentation/character_widget.dart';
-import 'package:achiever_app/shared/ui/dashboard_container_widget.dart';
+import 'package:achiever_app/dashboard/presentation/dashboard_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => AchievementProvider()),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 const appTitle = 'Achiever';
@@ -35,10 +44,13 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  // void _incrementCounter() {
-  //   setState(() {
-  //   });
-  // }
+  bool _showQuests = true;
+
+  void changePanel(bool showQuests) {
+    setState(() {
+      _showQuests = showQuests;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,12 +65,12 @@ class _MyHomePageState extends State<MyHomePage> {
               style: ElevatedButton.styleFrom(
                 textStyle: actionStyle,
               ),
-              onPressed: (() {}),
+              onPressed: (() => changePanel(true)),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  const Icon(Icons.warning_amber_outlined),
+                  const Icon(Icons.list_alt),
                   const SizedBox(
                     width: 10,
                   ),
@@ -76,7 +88,7 @@ class _MyHomePageState extends State<MyHomePage> {
             style: ElevatedButton.styleFrom(
               textStyle: actionStyle,
             ),
-            onPressed: (() {}),
+            onPressed: (() => changePanel(false)),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               mainAxisSize: MainAxisSize.min,
@@ -100,10 +112,10 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: const <Widget>[
-            CharacterWidget(),
+          children: <Widget>[
+            const CharacterWidget(),
             Expanded(
-              child: DashboardContainerWidget(),
+              child: DashboardWidget(showQuests: _showQuests),
             )
           ],
         ),

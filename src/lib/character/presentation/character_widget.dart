@@ -15,7 +15,11 @@ class _CharacterWidgetState extends State<CharacterWidget> {
         Expanded(
           child: Container(
             padding: const EdgeInsets.all(16),
-            color: Theme.of(context).colorScheme.primary,
+            color: Theme.of(context)
+                .copyWith(
+                  canvasColor: Colors.transparent,
+                )
+                .primaryColor,
             child: SizedBox(
                 width: double.infinity,
                 height: 100,
