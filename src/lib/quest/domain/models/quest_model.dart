@@ -1,4 +1,5 @@
 import 'package:achiever_app/quest/domain/models/quest_difficulty_model.dart';
+import 'package:achiever_app/quest/domain/models/quest_progress_model.dart';
 
 enum RepeatType { None, Daily, Multiple }
 
@@ -15,7 +16,7 @@ class Quest {
   String description;
   List<String> tags;
   Duration timebox;
-  DateTime? _completedAt;
+  QuestProgress progress;
 
   Quest(
     this.name, {
@@ -24,7 +25,8 @@ class Quest {
     this.description = '',
     this.tags = const [],
     this.timebox = Duration.zero,
-  }) : createdAt = DateTime.now();
+  })  : createdAt = DateTime.now(),
+        progress = QuestProgress();
 
   bool hasTimeLimit() {
     return timebox != Duration.zero;
@@ -35,10 +37,10 @@ class Quest {
   }
 
   bool isCompleted() {
-    return _completedAt != null;
+    return progress.isCompleted();
   }
 
   void complete() {
-    _completedAt = DateTime.now();
+    progress.complete();
   }
 }

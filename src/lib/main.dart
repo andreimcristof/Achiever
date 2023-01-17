@@ -1,6 +1,7 @@
 import 'package:achiever_app/achievement/domain/services/achievement_provider.dart';
 import 'package:achiever_app/character/presentation/character_widget.dart';
 import 'package:achiever_app/dashboard/presentation/dashboard_widget.dart';
+import 'package:achiever_app/app_menu_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -60,7 +61,6 @@ class _MyHomePageState extends State<MyHomePage> {
         actions: [
           // state altering actions
           // https://api.flutter.dev/flutter/material/TextButton-class.html#material.TextButton.2
-
           ElevatedButton(
               style: ElevatedButton.styleFrom(
                 textStyle: actionStyle,
@@ -106,6 +106,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ],
             ),
           ),
+          const AppMenuWidget(),
         ],
         title: Text(widget.title),
       ),

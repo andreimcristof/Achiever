@@ -1,4 +1,5 @@
-import 'package:achiever_app/achievement/presentation/achievement_list.dart';
+import 'package:achiever_app/achievement/presentation/achievement_list_widget.dart';
+import 'package:achiever_app/achievement/presentation/achievement_panel_widget.dart';
 import 'package:achiever_app/quest/presentation/quest_list.dart';
 import 'package:achiever_app/quest/presentation/quest_panel_widget.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +27,7 @@ class DashboardWidget extends StatelessWidget {
             child: Container(
               color: Colors.green,
               child: const Center(
-                child: AchievementListWidget(),
+                child: AchievementPanelWidget(),
               ),
             ),
           ),

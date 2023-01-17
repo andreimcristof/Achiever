@@ -1,3 +1,4 @@
+import 'package:achiever_app/achievement/presentation/achievement_list_widget.dart';
 import 'package:flutter/material.dart';
 
 class AchievementPanelWidget extends StatelessWidget {
@@ -7,13 +8,19 @@ class AchievementPanelWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Builder(builder: (context) {
       return Container(
-        color: Theme.of(context).backgroundColor,
+        color: Colors.white,
         child: SizedBox(
           width: double.infinity,
-          child: Column(children: const [
-            Text('Achievements',
-                style: TextStyle(fontSize: 20, color: Colors.black)),
-          ]),
+          child: Container(
+            padding: const EdgeInsets.all(16),
+            color: Colors.white,
+            child: Column(children: const [
+              SizedBox(height: 10),
+              Expanded(
+                child: AchievementListWidget(),
+              )
+            ]),
+          ),
         ),
       );
     });
