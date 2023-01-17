@@ -2,6 +2,8 @@ import 'package:achiever_app/achievement/domain/models/achievement_model.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import '../models/achievement_criteria_model.dart';
+
 abstract class BaseAchievementRepository {
   Future<List<Achievement>> fetchItems();
   Future<Achievement> addItem(Achievement item);
@@ -10,9 +12,11 @@ abstract class BaseAchievementRepository {
 class MockAchievementRepository extends BaseAchievementRepository {
   final List<Achievement> _mockData = [
     Achievement<CompletionAchievementCriteria>(
-        'completion1', 'finish 5 items', CompletionAchievementCriteria(5)),
+        'completion1', CompletionAchievementCriteria(5),
+        points: 20),
     Achievement<LevelReachAchievementCriteria>(
-        'lvlreach1', 'reach level 10', LevelReachAchievementCriteria(10))
+        'lvlreach1', LevelReachAchievementCriteria(10),
+        points: 30)
   ];
 
   @override
@@ -29,13 +33,6 @@ class MockAchievementRepository extends BaseAchievementRepository {
 
 class AchievementRepository extends BaseAchievementRepository {
   final String _baseUrl = 'https://example.com/api/items';
-
-  final List<Achievement> _mockData = [
-    Achievement<CompletionAchievementCriteria>(
-        'completion1', 'finish 5 items', CompletionAchievementCriteria(5)),
-    Achievement<LevelReachAchievementCriteria>(
-        'lvlreach1', 'reach level 10', LevelReachAchievementCriteria(10))
-  ];
 
   @override
   Future<List<Achievement>> fetchItems() async {

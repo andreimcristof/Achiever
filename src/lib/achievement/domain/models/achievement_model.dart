@@ -1,57 +1,36 @@
-/// Achievement model class that accepts a generic type of AchievementCriteria
+import 'package:achiever_app/achievement/domain/models/achievement_criteria_model.dart';
+import 'package:achiever_app/achievement/domain/models/achievement_progress_model.dart';
+
 class Achievement<T extends AchievementCriteria> {
-  final String name;
-  final String description;
-  DateTime? acquiredOn;
+  // mandatory at creation
+  late final String name;
+  late final T achievementCriteria;
+  late final int points;
+  late AchievementProgress progress;
 
-  T achievementCriteria;
+  // changeable later
+  late String description;
+  late List<String> tags;
 
-  Achievement(this.name, this.description, this.achievementCriteria);
+  Achievement(
+    this.name,
+    this.achievementCriteria, {
+    this.description = '',
+    this.points = achievementMinPoints,
+  })  : tags = [],
+        progress = AchievementProgress();
 
-  void complete() {
-    acquiredOn = DateTime.now();
+  Achievement.fromJson(Map<String, dynamic> json) {
+    name = json['name'];
+    description = json['description'];
+    points = json['points'];
+    tags = json['tags'].cast<String>();
+    progress = AchievementProgress.fromJson(json['progress']);
   }
 
-  factory Achievement.fromJson(Map<String, dynamic> json) {
-    return Achievement(
-        json['name'], json['description'], json['achievementCriteria']);
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'name': name,
-      'description': description,
-      'achievementCriteria': achievementCriteria,
-    };
+  void addProgress() {
+    progress.addProgress();
   }
 }
 
-/// each Achievement subtype has different completion criteria.
-/// This serves as base class for all completion criteria.
-class AchievementCriteria {}
-
-class LevelReachAchievementCriteria extends AchievementCriteria {
-  final int levelRequired;
-  LevelReachAchievementCriteria(this.levelRequired);
-}
-
-class TimedAchievementCriteria extends AchievementCriteria {
-  final Duration timeRequired;
-  TimedAchievementCriteria(this.timeRequired);
-}
-
-class CompletionAchievementCriteria extends AchievementCriteria {
-  final int completionCountRequired;
-  CompletionAchievementCriteria(this.completionCountRequired);
-}
-
-// usage:
-
-// var levelReachedAchievement = Achievement<LevelReachAchievementCriteria>(
-//     'name', 'description', LevelReachAchievementCriteria(10));
-
-// var timedAchievement = Achievement<TimedAchievementCriteria>('name',
-//     'description', TimedAchievementCriteria(const Duration(seconds: 60)));
-
-// var completionAchievement = Achievement<CompletionAchievementCriteria>(
-//     'name', 'description', CompletionAchievementCriteria(10));
+const int achievementMinPoints = 10;

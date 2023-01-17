@@ -1,10 +1,14 @@
 class Reward {
-  DateTime? acquiredOn;
+  DateTime? completedAt;
+
+  complete() {
+    completedAt = DateTime.now();
+  }
 
   Reward();
 
-  acquire() {
-    acquiredOn = DateTime.now();
+  Reward.fromJson(Map<String, dynamic> json) {
+    completedAt = json['completedAt'];
   }
 }
 
@@ -13,4 +17,9 @@ class Title extends Reward {
   final String description;
 
   Title(this.name, this.description) : super();
+
+  Title.fromJson(Map<String, dynamic> json)
+      : name = json['name'],
+        description = json['description'],
+        super.fromJson(json);
 }

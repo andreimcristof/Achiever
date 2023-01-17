@@ -1,4 +1,5 @@
 import 'package:achiever_app/achievement/domain/data/achievement_repository.dart';
+import 'package:achiever_app/achievement/domain/models/achievement_criteria_model.dart';
 import 'package:achiever_app/achievement/domain/models/achievement_model.dart';
 import 'package:flutter/material.dart';
 

@@ -1,11 +1,10 @@
 import 'dart:async';
-
-import 'package:achiever_app/character/domain/models/skill_model.dart';
 import 'package:achiever_app/quest/domain/models/quest_difficulty_model.dart';
 import 'package:achiever_app/quest/domain/models/quest_model.dart';
 import 'package:flutter/material.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:timeago/timeago.dart' as timeago;
+import 'package:duration/duration.dart' as prettyDuration;
 
 class QuestListWidget<T> extends StatefulWidget {
   final T title;
@@ -18,10 +17,10 @@ class QuestListWidget<T> extends StatefulWidget {
 class _RepeatableTaskWidgetState extends State<QuestListWidget> {
   // Mocked array of Item objects
   final List<Quest> _quests = [
-    Quest('Quest 1', Difficulty.easy, ['programming', 'flutter']),
-    Quest('Quest 2', Difficulty.easy, ['programming']),
-    Quest('Quest 3', Difficulty.medium, ['guitar', 'music']),
-    Quest('Quest 4', Difficulty.hard, []),
+    Quest('Quest 1'),
+    Quest('Quest 2'),
+    Quest('Quest 3'),
+    Quest('Quest 4'),
   ];
 
   @override
@@ -77,7 +76,7 @@ class _RepeatableTaskWidgetState extends State<QuestListWidget> {
                         children: [
                           Row(children: difficultyMap(quest)),
                           Text(
-                            'made ${timeago.format(quest.createdAt)} ${quest.timebox != null ? '| timebox: ${quest.timebox}' : ''}',
+                            'made ${timeago.format(quest.createdAt)} ${quest.hasTimeLimit() ? '| timebox: ${prettyDuration.printDuration(quest.timebox)}' : ''}',
                             style: const TextStyle(
                                 color: Colors.grey,
                                 fontSize: 12,
@@ -200,7 +199,7 @@ class _RepeatableTaskWidgetState extends State<QuestListWidget> {
                 if (value.isEmpty) return;
 
                 setState(() {
-                  var quest = Quest(value, Difficulty.easy, []);
+                  var quest = Quest(value);
                   _quests.add(quest);
                   _quests.sort(
                       (Quest a, Quest b) => b.createdAt.compareTo(a.createdAt));
