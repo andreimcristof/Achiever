@@ -1,4 +1,12 @@
-# Defining Requirements
+# Documentation structure
+
+Since this repo contains both frontend and backend components, the documentation is also split accordingly.
+
+- Backend documentation [is here](../backend/README.md)
+- Frontend documentation [is here](../frontend/src/README.md)
+- The initial discussion about use cases and frontend usage, that started the project, is below.
+
+## Defining Requirements
 
 - I can create, read, update, delete ACH (Achievement)
 - An ACH can be standalone, or Epic ACH
