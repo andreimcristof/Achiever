@@ -36,7 +36,6 @@ class AchievementRepository extends BaseAchievementRepository {
 
   @override
   Future<List<Achievement>> fetchItems() async {
-    // Make a GET request to the API
     final response = await http.get(
       Uri.https(_baseUrl),
     );

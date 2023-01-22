@@ -16,7 +16,7 @@ class QuestListWidget<T> extends StatefulWidget {
 
 class _RepeatableTaskWidgetState extends State<QuestListWidget> {
   // Mocked array of Item objects
-  final List<Quest> _quests = [
+   final List<Quest> _quests = [
     Quest('Quest 1'),
     Quest('Quest 2'),
     Quest('Quest 3'),

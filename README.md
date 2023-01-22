@@ -16,9 +16,13 @@ I highly recommend the video series because they contain lots of details and exp
 
 With Dart and Flutter. I chose this stack because its very cross-platform friendly, design is very consistent, dev experience of this framework is very smooth and intuitive, plus it is easy to grasp for developers who come from a Java/C# background.
 
+Frontend documentation [is here](./frontend/README.md).
+
 ### How is the backend written?
 
-Backend documentation [is here](./backend/README.md). Long story short: AWS, dotnet, infrastructure as code, lambdas, pubsub messaging. Read the docu for details.
+In short: AWS, dotnet, infrastructure as code, lambdas, pubsub messaging. Read the docu for details.
+
+Backend documentation [is here](./backend/README.md).
 
 ### Do you accept pull requests?
 

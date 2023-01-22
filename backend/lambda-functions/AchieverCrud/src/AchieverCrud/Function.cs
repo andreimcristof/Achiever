@@ -1,6 +1,13 @@
-using Amazon.DynamoDBv2;
+using AchieverCrud.Domain.Database;
+using AchieverCrud.Domain.Models;
+using AchieverCrud.Domain.Services;
+using AchieverCrud.Handlers;
 using Amazon.Lambda.APIGatewayEvents;
 using Amazon.Lambda.Core;
+using Amazon.Runtime.Internal.Util;
+using Newtonsoft.Json;
+using System.Reflection.Metadata;
+using System.Text.Json.Serialization;
 
 
 // Assembly attribute to enable the Lambda function's JSON input to be converted into a .NET class.
@@ -10,68 +17,41 @@ namespace AchieverCrud;
 
 public class Function
 {
-    private static class RoutePath
-    {
-        public const string Achievements = "/achievements";
-        public const string Quests = "/quests";
-        public const string Characters = "/characters";
-    }
+    private string tableName;
     
-    /// <summary>
-    /// A simple function that takes a string and does a ToUpper
-    /// </summary>
-    /// <param name="input"></param>
-    /// <param name="context"></param>
-    /// <returns></returns>```````
-    public async Task<APIGatewayHttpApiV2ProxyResponse> FunctionHandler(APIGatewayHttpApiV2ProxyRequest request, ILambdaContext context)
+    public Function()
     {
-        context.Logger.Log($"AchieverAppCrud Lambda called with: {request}");
-        AmazonDynamoDBClient dbClient = new AmazonDynamoDBClient();
-        
-        var tableName = Environment.GetEnvironmentVariable("TABLE_NAME");        
+        tableName = Environment.GetEnvironmentVariable("TABLE_NAME")!;
+    }
 
-        switch (request.RawPath)
+    
+    public async Task<APIGatewayProxyResponse> FunctionHandler(APIGatewayProxyRequest request, ILambdaContext context)
+    {
+        context.Logger.LogInformation($"AchieverAppCrud called: {request.HttpMethod}: {request.Path}");
+
+        if (request.Path.StartsWith("/achiever/achievements"))
         {
-            case RoutePath.Achievements:
-                return await AchievementsHandler(request, context, dbClient, tableName);
-            case RoutePath.Quests:
-                return await QuestsHandler(request, context, dbClient, tableName);
-            case RoutePath.Characters:
-                return await CharactersHandler(request, context, dbClient, tableName);
-
-            default:
-                return new APIGatewayHttpApiV2ProxyResponse
-                {
-                    StatusCode = 404,
-                    Body = $"No route found for {request.RawPath}"
-                };
+            var service = new DomainService<Achievement>(new DynamoDbRepository<Achievement>(tableName), context.Logger);
+            var handler = new DomainHandler<Achievement>(service);
+            return await handler.Handle(request, context);
         }
-    }
-
-    private Task<APIGatewayHttpApiV2ProxyResponse> CharactersHandler(APIGatewayHttpApiV2ProxyRequest request, ILambdaContext context, AmazonDynamoDBClient dbClient, string? tableName)
-    {
-        return Task.FromResult(new APIGatewayHttpApiV2ProxyResponse
+        if (request.Path.StartsWith("/achiever/quests"))
         {
-            StatusCode = 200,
-            Body = $"CharactersHandler called with {request.RawPath}"
-        });
-    }
-
-    private Task<APIGatewayHttpApiV2ProxyResponse> QuestsHandler(APIGatewayHttpApiV2ProxyRequest request, ILambdaContext context, AmazonDynamoDBClient dbClient, string? tableName)
-    {
-        return Task.FromResult(new APIGatewayHttpApiV2ProxyResponse
+            var service = new DomainService<Quest>(new DynamoDbRepository<Quest>(tableName), context.Logger);
+            var handler = new DomainHandler<Quest>(service);
+            return await handler.Handle(request, context);
+        }
+        if (request.Path.StartsWith("/achiever/characters"))
         {
-            StatusCode = 200,
-            Body = $"QuestsHandler called with {request.RawPath}"
-        });
-    }
-
-    private Task<APIGatewayHttpApiV2ProxyResponse> AchievementsHandler(APIGatewayHttpApiV2ProxyRequest request, ILambdaContext context, AmazonDynamoDBClient dbClient, string? tableName)
-    {
-        return Task.FromResult(new APIGatewayHttpApiV2ProxyResponse
+            var service = new DomainService<Character>(new DynamoDbRepository<Character>(tableName), context.Logger);
+            var handler = new DomainHandler<Character>(service);
+            return await handler.Handle(request, context);
+        }
+            
+        return new APIGatewayProxyResponse
         {
-            StatusCode = 200,
-            Body = $"AchievementsHandler called with {request.RawPath}"
-        });
+            StatusCode = 404,
+            Body = $"No route found for {request.Path}"
+        };
     }
 }

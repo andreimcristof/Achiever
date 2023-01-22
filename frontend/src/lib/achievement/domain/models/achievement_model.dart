@@ -18,6 +18,8 @@ class Achievement<T extends AchievementCriteria> {
     this.description = '',
     this.points = achievementMinPoints,
   })  : tags = [],
+  //TODO: progress is contained in the achievement, as it belongs to the character, 
+  //not the achievement itself.
         progress = AchievementProgress();
 
   Achievement.fromJson(Map<String, dynamic> json) {

@@ -41,6 +41,6 @@ class Quest {
   }
 
   void complete() {
-    progress.complete();
+   // progress.complete();
   }
 }
